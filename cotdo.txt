@@ -177,7 +177,7 @@ do
         function(io, p)
         if io.KeyCode == UIConfig.Bind then
         if uitoggled == false then
-        Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 1, true)
+        Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0, true)
         uitoggled = true
         wait(.5)
         UI.Enabled = false
