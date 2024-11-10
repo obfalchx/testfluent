@@ -406,7 +406,211 @@ do
     local UIGradient = Instance.new("UIGradient")
     
 
-
+    dragify(ClickFrame, Main)
+    local tabs = {}
+    local S = false
+    function tabs:Tab(Name, icon)
+    local FrameTab = Instance.new("Frame")
+    local Tab = Instance.new("TextButton")
+    local UICorner_3 = Instance.new("UICorner")
+    local UICorner_Tab = Instance.new("UICorner")
+    local TextLabel = Instance.new("TextLabel")
+    FrameTab.Name = "FrameTab"
+    FrameTab.Parent = Tab
+    FrameTab.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    FrameTab.Position = UDim2.new(0.3, 0, 0.9, 0)
+    FrameTab.Size = UDim2.new(0, 0, 0, 0)
+    FrameTab.BackgroundTransparency = 0
+    FrameTab.Visible = false
+    
+    
+    UICorner_Tab.CornerRadius = UDim.new(0, 3)
+    UICorner_Tab.Parent = FrameTab
+    Tab.Name = "Tab"
+    Tab.Parent = TabContainer
+    Tab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Tab.Size = UDim2.new(0, 114, 0, 30)
+    Tab.BackgroundTransparency = 0
+    Tab.Text = ""
+    UICorner_3.CornerRadius = UDim.new(0, 3)
+    UICorner_3.Parent = Tab
+    local UIGradient2 = Instance.new("UIGradient")
+    UIGradient2.Color = ColorSequence.new {
+      ColorSequenceKeypoint.new(0.00, Color3.fromRGB(29, 29, 29)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient2.Parent = Tab
+    
+    local ImageLabel1 = Instance.new("ImageLabel")
+    ImageLabel1.Name = "ImageLabel"
+    ImageLabel1.Parent = Tab
+    ImageLabel1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageLabel1.BackgroundTransparency = 1.000
+    ImageLabel1.Position = UDim2.new(0, 5, 0.2, 0)
+    ImageLabel1.Size = UDim2.new(0, 20, 0, 20)
+    ImageLabel1.Image = "rbxassetid://" .. tostring(icon)
+    local ImageLabel = Instance.new("ImageLabel")
+    ImageLabel.Name = "ImageLabel"
+    ImageLabel.Parent = Tab
+    ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageLabel.BackgroundTransparency = 1.000
+    ImageLabel.Position = UDim2.new(0, 5, 0.2, 0)
+    ImageLabel.Size = UDim2.new(0, 20, 0, 20)
+    ImageLabel.Image = "rbxassetid://"
+    
+    TextLabel.Parent = Tab
+    TextLabel.Text = Name
+    local UiToggle_UiStroke901 = Instance.new("UIStroke")
+    UiToggle_UiStroke901.Color = _G.Color
+    UiToggle_UiStroke901.Thickness = 2
+    UiToggle_UiStroke901.Name = "UiToggle_UiStroke901"
+    UiToggle_UiStroke901.Parent = Tab
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Position = UDim2.new(0.252105269, 0, 0.100000001, 0)
+    TextLabel.Size = UDim2.new(0, 10, 0, 27)
+    TextLabel.Font = Enum.Font.GothamBold
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextSize = 12.300
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel.TextTransparency = 0.200
+    TextLabel.Text = Name
+    
+    local Page = Instance.new("ScrollingFrame")
+    local Left = Instance.new("ScrollingFrame")
+    local Right = Instance.new("ScrollingFrame")
+    local UIListLayout_5 = Instance.new("UIListLayout")
+    local UIPadding_5 = Instance.new("UIPadding")
+    Page.Name = "Page"
+    Page.Parent = Bottom
+    Page.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Page.BackgroundTransparency = 1.000
+    Page.Size = UDim2.new(0, 500, 0, 300)
+    Page.ScrollBarThickness = 0
+    Page.CanvasSize = UDim2.new(0, 0, 0, 0)
+    Page.Visible = false
+    
+    Left.Name = "Left"
+    Left.Parent = Page
+    Left.Active = true
+    Left.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Left.BackgroundTransparency = 1
+    Left.Size = UDim2.new(0, 240, 0, 260)
+    Left.ScrollBarThickness = 0
+    Left.CanvasSize = UDim2.new(0, 0, 0, 0)
+    Right.Name = "Right"
+    Right.Parent = Page
+    Right.Active = true
+    Right.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Right.BackgroundTransparency = 1
+    Right.Size = UDim2.new(0, 240, 0, 260)
+    Right.ScrollBarThickness = 0
+    Right.CanvasSize = UDim2.new(0, 0, 0, 0)
+    local LeftList = Instance.new("UIListLayout")
+    local RightList = Instance.new("UIListLayout")
+    LeftList.Parent = Left
+    LeftList.SortOrder = Enum.SortOrder.LayoutOrder
+    LeftList.Padding = UDim.new(0, 5)
+    RightList.Parent = Right
+    RightList.SortOrder = Enum.SortOrder.LayoutOrder
+    RightList.Padding = UDim.new(0, 5)
+    UIListLayout_5.Parent = Page
+    UIListLayout_5.FillDirection = Enum.FillDirection.Horizontal
+    UIListLayout_5.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout_5.Padding = UDim.new(0, 13)
+    UIPadding_5.Parent = Page
+    if S == false then
+    S = true
+    Page.Visible = true
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextTransparency = 0
+    ImageLabel.ImageTransparency = 0
+    ImageLabel.ImageColor3 = Color3.fromRGB(255, 255, 255)
+    FrameTab.Size = UDim2.new(0, 40, 0, 2)
+    FrameTab.Visible = true
+    end
+    
+    Tab.MouseButton1Click:Connect(
+      function()
+      for _, x in next, TabContainer:GetChildren() do
+      if x.Name == "Tab" then
+      TweenService:Create(
+        x.TextLabel,
+        TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+          TextColor3 = Color3.fromRGB(255, 255, 255)}
+      ):Play()
+      TweenService:Create(
+        x.TextLabel,
+        TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+          TextTransparency = 0.2
+        }
+      ):Play()
+      TweenService:Create(
+        x.FrameTab,
+        TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+          Size = UDim2.new(0, 0, 0, 2)}
+      ):Play()
+      for index, y in next, Bottom:GetChildren() do
+      TweenService:Create(
+        y,
+        TweenInfo.new(0.2,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),
+        {
+          Position = UDim2.new(0,1500,0,0)}
+      ):Play()
+      y.Visible = false
+      end
+      x.FrameTab.Visible = false
+      end
+      end
+      TweenService:Create(
+        TextLabel,
+        TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+          TextColor3 = _G.Color
+        }
+      ):Play()
+      TweenService:Create(
+        TextLabel,
+        TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+          TextTransparency = 0
+        }
+      ):Play()
+      FrameTab.Visible = true
+      TweenService:Create(
+        FrameTab,
+        TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+          Size = UDim2.new(0, 40, 0, 2)}
+      ):Play()
+      Page.Position = UDim2.new(0,0,0,1500)
+      TweenService:Create(
+        Page,
+        TweenInfo.new(0.2,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),
+        {
+          Position = UDim2.new(0,0,0,0)}
+      ):Play()
+      Page.Visible = true
+      end
+    )
+    
+    local function GetType(value)
+    if value == 1 then
+    return Left
+    elseif value == 2 then
+    return Right
+    else
+      return Left
+    end
+    end
+    
+    game:GetService("RunService").Stepped:Connect(function()
+      pcall(function()
+        Right.CanvasSize = UDim2.new(0,0,0,RightList.AbsoluteContentSize.Y + 5)
+        Left.CanvasSize = UDim2.new(0,0,0,LeftList.AbsoluteContentSize.Y + 5)
+        end)
+      end)
     
     local sections = {}
     function sections:CraftPage(side)
