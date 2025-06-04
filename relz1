@@ -88,7 +88,7 @@ function Update:Window(Config)
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0);
 	Main.Size = WindowConfig.Size;
 	OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 3.5, 0, WindowConfig.Size.Y.Offset + 3.5), "Out", "Quad", 0, true);
-	CreateRounded(Main, 12);
+	CreateRounded(Main, 10);
 	local BtnStroke = Instance.new("UIStroke");
 	local DragButton = Instance.new("Frame");
 	DragButton.Name = "DragButton";
