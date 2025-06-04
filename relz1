@@ -1,4 +1,4 @@
-print'4' 
+print'5' 
 
 if (game:GetService("CoreGui")):FindFirstChild("Xeter") and (game:GetService("CoreGui")):FindFirstChild("ScreenGui") then
 	(game:GetService("CoreGui")).Xeter:Destroy();
@@ -582,7 +582,7 @@ function Update:Window(Config)
 					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
 					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
 				end);
-				OutlineMain:TweenSize(UDim2.new(1, -10, 1, -10), "Out", "Quad", 0.4, true);
+				OutlineMain:TweenSize(UDim2.new(1, -10, 1, -10), "Out", "Quad", 0, true);
 				ResizeButton.Image = "rbxassetid://10734895698";
 			else
 				defaultSize = true;
@@ -590,7 +590,7 @@ function Update:Window(Config)
 					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
 					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
 				end);
-				OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 4, 0, WindowConfig.Size.Y.Offset + 4), "Out", "Quad", 0.4, true);
+				OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 4, 0, WindowConfig.Size.Y.Offset + 4), "Out", "Quad", 0, true);
 				ResizeButton.Image = "rbxassetid://10734886735";
 			end;
 		end);
