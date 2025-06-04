@@ -87,7 +87,7 @@ function Update:Window(Config)
 	Main.BackgroundTransparency = 0;
 	Main.Position = UDim2.new(0.5, 0, 0.5, 0);
 	Main.Size = WindowConfig.Size;
-	OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 3, 0, WindowConfig.Size.Y.Offset + 3), "Out", "Quad", 0.4, true);
+	OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 4, 0, WindowConfig.Size.Y.Offset + 4), "Out", "Quad", 0.4, true);
 	CreateRounded(Main, 12);
 	local BtnStroke = Instance.new("UIStroke");
 	local DragButton = Instance.new("Frame");
@@ -421,7 +421,7 @@ function Update:Window(Config)
 	end);
 	UserInputService.InputChanged:Connect(function(Input)
 		if Dragging and (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) then
-			OutlineMain.Size = UDim2.new(0, math.clamp(Input.Position.X - Main.AbsolutePosition.X + 3, WindowConfig.Size.X.Offset + 3, math.huge), 0, math.clamp(Input.Position.Y - Main.AbsolutePosition.Y + 3, WindowConfig.Size.Y.Offset + 3, math.huge));
+			OutlineMain.Size = UDim2.new(0, math.clamp(Input.Position.X - Main.AbsolutePosition.X + 4, WindowConfig.Size.X.Offset + 4, math.huge), 0, math.clamp(Input.Position.Y - Main.AbsolutePosition.Y + 4, WindowConfig.Size.Y.Offset + 4, math.huge));
 			Main.Size = UDim2.new(0, math.clamp(Input.Position.X - Main.AbsolutePosition.X, WindowConfig.Size.X.Offset, math.huge), 0, math.clamp(Input.Position.Y - Main.AbsolutePosition.Y, WindowConfig.Size.Y.Offset, math.huge));
 			Page.Size = UDim2.new(0, math.clamp(Input.Position.X - Page.AbsolutePosition.X - 8, WindowConfig.Size.X.Offset - Tab.Size.X.Offset - 25, math.huge), 0, math.clamp(Input.Position.Y - Page.AbsolutePosition.Y - 8, WindowConfig.Size.Y.Offset - Top.Size.Y.Offset - 10, math.huge));
 			Tab.Size = UDim2.new(0, WindowConfig.TabWidth, 0, math.clamp(Input.Position.Y - Tab.AbsolutePosition.Y - 8, WindowConfig.Size.Y.Offset - Top.Size.Y.Offset - 10, math.huge));
@@ -590,7 +590,7 @@ function Update:Window(Config)
 					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
 					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
 				end);
-				OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 3, 0, WindowConfig.Size.Y.Offset + 3), "Out", "Quad", 0.4, true);
+				OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 4, 0, WindowConfig.Size.Y.Offset + 4), "Out", "Quad", 0.4, true);
 				ResizeButton.Image = "rbxassetid://10734886735";
 			end;
 		end);
