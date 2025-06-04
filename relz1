@@ -73,7 +73,7 @@ function Update:Window(Config)
 	OutlineMain.Parent = Xeter;
 	OutlineMain.ClipsDescendants = true;
 	OutlineMain.AnchorPoint = Vector2.new(0.5, 0.5);
-	OutlineMain.BackgroundColor3 = Color3.fromRGB(30, 30, 30);
+	OutlineMain.BackgroundColor3 = Color3.fromRGB(51, 153, 153);
 	OutlineMain.BackgroundTransparency = 0.4;
 	OutlineMain.Position = UDim2.new(0.5, 0, 0.45, 0);
 	OutlineMain.Size = UDim2.new(0, 0, 0, 0);
