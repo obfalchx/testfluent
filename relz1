@@ -93,7 +93,7 @@ function Update:Window(Config)
 	DragButton.Parent = Main;
 	DragButton.Position = UDim2.new(1, 5, 1, 5);
 	DragButton.AnchorPoint = Vector2.new(1, 1);
-	DragButton.Size = UDim2.new(0, 15, 0, 15);
+	DragButton.Size = UDim2.new(0, 1, 0, 1);
 	DragButton.BackgroundColor3 = _G.Primary;
 	DragButton.BackgroundTransparency = 1;
 	DragButton.ZIndex = 10;
