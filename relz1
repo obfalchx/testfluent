@@ -1,3 +1,5 @@
+print'11'
+
 if (game:GetService("CoreGui")):FindFirstChild("Xeter") and (game:GetService("CoreGui")):FindFirstChild("ScreenGui") then
 	(game:GetService("CoreGui")).Xeter:Destroy();
 	(game:GetService("CoreGui")).ScreenGui:Destroy();
