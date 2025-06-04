@@ -2,7 +2,7 @@ if (game:GetService("CoreGui")):FindFirstChild("Xeter") and (game:GetService("Co
 	(game:GetService("CoreGui")).Xeter:Destroy();
 	(game:GetService("CoreGui")).ScreenGui:Destroy();
 end;
-_G.Primary = Color3.fromRGB(0, 0, 0);
+_G.Primary = Color3.fromRGB(255, 0, 0);
 _G.Dark = Color3.fromRGB(22, 22, 26);
 _G.Third = Color3.fromRGB(51, 153, 153);
 function CreateRounded(Parent, Size)
