@@ -1311,31 +1311,6 @@ function Update:Window(Config)
 			Sep3.TextColor3 = Color3.fromRGB(255, 255, 255);
 			Sep3.TextSize = 14;
 		end;
-		function main:Line()
-			local Linee = Instance.new("Frame");
-			local Line = Instance.new("Frame");
-			local UIGradient = Instance.new("UIGradient");
-			Linee.Name = "Linee";
-			Linee.Parent = MainFramePage;
-			Linee.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-			Linee.BackgroundTransparency = 1;
-			Linee.Position = UDim2.new(0, 0, 0.119999997, 0);
-			Linee.Size = UDim2.new(1, 0, 0, 20);
-			Line.Name = "Line";
-			Line.Parent = Linee;
-			Line.BackgroundColor3 = Color3.new(125, 125, 125);
-			Line.BorderSizePixel = 0;
-			Line.Position = UDim2.new(0, 0, 0, 10);
-			Line.Size = UDim2.new(1, 0, 0, 1);
-			UIGradient.Color = ColorSequence.new({
-				ColorSequenceKeypoint.new(0, _G.Dark),
-				ColorSequenceKeypoint.new(0.4, _G.Primary),
-				ColorSequenceKeypoint.new(0.5, _G.Primary),
-				ColorSequenceKeypoint.new(0.6, _G.Primary),
-				ColorSequenceKeypoint.new(1, _G.Dark)
-			});
-			UIGradient.Parent = Line;
-		end;
 		return main;
 	end;
 	return uitab;
