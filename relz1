@@ -342,7 +342,7 @@ function Update:Window(Config)
 		CreateRounded(Button, 5);
 	end;
 	CreateButton("Discord Xeter Hub", function()
-		setclipboard("https://discord.com/invite/hcJ8PHtkfy")
+		setclipboard("https://discord.com/invite/ekGasVyhTy")
 	end);
 	local Tab = Instance.new("Frame");
 	Tab.Name = "Tab";
@@ -577,16 +577,16 @@ function Update:Window(Config)
 				defaultSize = false;
 				OutlineMain:TweenPosition(UDim2.new(0.5, 0, 0.45, 0), "Out", "Quad", 0.2, true);
 				Main:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Quad", 0.4, true, function()
-					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
-					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
+					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0, true);
+					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0, true);
 				end);
 				OutlineMain:TweenSize(UDim2.new(1, -10, 1, -10), "Out", "Quad", 0, true);
 				ResizeButton.Image = "rbxassetid://10734895698";
 			else
 				defaultSize = true;
 				Main:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset, 0, WindowConfig.Size.Y.Offset), "Out", "Quad", 0.4, true, function()
-					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
-					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0.4, true);
+					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0, true);
+					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0, true);
 				end);
 				OutlineMain:TweenSize(UDim2.new(0, WindowConfig.Size.X.Offset + 3.5, 0, WindowConfig.Size.Y.Offset + 3.5), "Out", "Quad", 0, true);
 				ResizeButton.Image = "rbxassetid://10734886735";
