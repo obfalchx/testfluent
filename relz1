@@ -1,4 +1,4 @@
--- 1
+-- 2
 
 if (game:GetService("CoreGui")):FindFirstChild("Xeter") and (game:GetService("CoreGui")):FindFirstChild("ScreenGui") then
 	(game:GetService("CoreGui")).Xeter:Destroy();
@@ -578,7 +578,7 @@ function Update:Window(Config)
 			if defaultSize then
 				defaultSize = false;
 				OutlineMain:TweenPosition(UDim2.new(0.5, 0, 0.45, 0), "Out", "Quad", 0, true);
-				Main:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Quad", 0.4, true, function()
+				Main:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Quad", 0, true, function()
 					Page:TweenSize(UDim2.new(0, Main.AbsoluteSize.X - Tab.AbsoluteSize.X - 25, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0, true);
 					Tab:TweenSize(UDim2.new(0, WindowConfig.TabWidth, 0, Main.AbsoluteSize.Y - Top.AbsoluteSize.Y - 10), "Out", "Quad", 0, true);
 				end);
