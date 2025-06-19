@@ -1001,7 +1001,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	                Increment = SliderConfig[4] or 1,
 	                Default = SliderConfig[5] or 50,
 	                Callback = SliderConfig[6] or function() end,
-	                ValueName = "",  -- có thể thêm SliderConfig[7] nếu bạn muốn cho ValueName
+	                ValueName = "",
 	                Color = Color3.fromRGB(9, 149, 98),
 	                Flag = nil,
 	                Save = false
