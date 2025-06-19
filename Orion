@@ -1089,7 +1089,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				end
 				return Slider
 			end  
-			function ElementFunction:AddDropdown(DropdownConfig)
+			function ElementFunction:Dropdown(DropdownConfig)
 				DropdownConfig = DropdownConfig or {}
 				DropdownConfig.Name = DropdownConfig.Name or "Dropdown"
 				DropdownConfig.Options = DropdownConfig.Options or {}
