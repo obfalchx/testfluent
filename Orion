@@ -1,4 +1,4 @@
-print'5'
+print'6'
 
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -1366,7 +1366,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				end
 				return Bind
 			end  
-			function ElementFunction:AddTextbox(TextboxConfig)
+			function ElementFunction:Textbox(TextboxConfig)
 				TextboxConfig = TextboxConfig or {}
 				TextboxConfig.Name = TextboxConfig.Name or "Textbox"
 				TextboxConfig.Default = TextboxConfig.Default or ""
