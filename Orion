@@ -994,17 +994,18 @@ function OrionLib:MakeWindow(WindowConfig)
 				return Toggle
 			end  
 			function ElementFunction:AddSlider(SliderConfig)
-				SliderConfig = SliderConfig or {}
-				SliderConfig.Name = SliderConfig.Name or "Slider"
-				SliderConfig.Min = SliderConfig.Min or 0
-				SliderConfig.Max = SliderConfig.Max or 100
-				SliderConfig.Increment = SliderConfig.Increment or 1
-				SliderConfig.Default = SliderConfig.Default or 50
-				SliderConfig.Callback = SliderConfig.Callback or function() end
-				SliderConfig.ValueName = SliderConfig.ValueName or ""
-				SliderConfig.Color = SliderConfig.Color or Color3.fromRGB(9, 149, 98)
-				SliderConfig.Flag = SliderConfig.Flag or nil
-				SliderConfig.Save = SliderConfig.Save or false
+				SliderConfig = {
+	                Name = SliderConfig[1] or "Slider",
+	                Min = SliderConfig[2] or 0,
+	                Max = SliderConfig[3] or 100,
+	                Increment = SliderConfig[4] or 1,
+	                Default = SliderConfig[5] or 50,
+	                Callback = SliderConfig[6] or function() end,
+	                ValueName = "",  -- có thể thêm SliderConfig[7] nếu bạn muốn cho ValueName
+	                Color = Color3.fromRGB(9, 149, 98),
+	                Flag = nil,
+	                Save = false
+                }
 
 				local Slider = {Value = SliderConfig.Default, Save = SliderConfig.Save}
 				local Dragging = false
