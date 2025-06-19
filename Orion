@@ -993,7 +993,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				end	
 				return Toggle
 			end  
-			function ElementFunction:AddSlider(SliderConfig)
+			function ElementFunction:Slider(SliderConfig)
 				SliderConfig = {
 	                Name = SliderConfig[1] or "Slider",
 	                Min = SliderConfig[2] or 0,
