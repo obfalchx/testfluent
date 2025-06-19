@@ -1,4 +1,4 @@
-print'2'
+print'1'
 
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -1634,8 +1634,8 @@ function OrionLib:MakeWindow(WindowConfig)
 
 		local ElementFunction = {}
 
-		function ElementFunction:Section(Name)
-			Name = Name or "Section"
+		function ElementFunction:Section(SectionConfig)
+			SectionConfig.Name = SectionConfig.Name or "Section"
 
 			local SectionFrame = SetChildren(SetProps(MakeElement("TFrame"), {
 				Size = UDim2.new(1, 0, 0, 26),
