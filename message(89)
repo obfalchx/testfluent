@@ -1,0 +1,815 @@
+local cg=game:GetService("CoreGui")
+local uis=game:GetService("UserInputService")
+local ts=game:GetService("TweenService")
+local txs=game:GetService("TextService")
+local rs=game:GetService("RunService")
+
+if cg:FindFirstChild("RELZHUB") and cg:FindFirstChild("ScreenGui") then
+	cg.RELZHUB:Destroy()
+	cg.ScreenGui:Destroy()
+end
+
+local themes={
+	Red={Color3.fromRGB(255,30,50),Color3.fromRGB(90,10,20)},
+	Cyan={Color3.fromRGB(40,230,255),Color3.fromRGB(10,80,115)},
+	Blue={Color3.fromRGB(40,155,255),Color3.fromRGB(10,80,115)},
+	DarkBlue={Color3.fromRGB(50,30,255),Color3.fromRGB(20,10,90)},
+	Green={Color3.fromRGB(70,255,205),Color3.fromRGB(20,90,90)},
+	LightGreen={Color3.fromRGB(205,255,205),Color3.fromRGB(70,90,70)},
+	Purple={Color3.fromRGB(205,125,255),Color3.fromRGB(60,20,95)},
+	Zinc={Color3.fromRGB(30,30,30),Color3.fromRGB(10,10,10)}
+}
+
+local t=themes[_G.Theme]
+if t then _G.Primary,_G.Dark=t[1],t[2]
+else _G.Primary,_G.Dark=Color3.fromRGB(110,110,120),Color3.fromRGB(20,20,30) end
+
+local btn=Instance.new("ScreenGui")
+btn.Parent=cg
+btn.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+
+local img=Instance.new("ImageButton")
+img.Parent=btn
+img.Position=UDim2.new(0,10,0,10)
+img.Size=UDim2.new(0,50,0,50)
+img.Draggable=true
+img.BackgroundColor3=_G.Dark
+img.ImageColor3=_G.Primary
+img.ImageTransparency=.1
+img.BackgroundTransparency=.1
+img.Image="rbxassetid://13940080072"
+
+local us=Instance.new("UIStroke")
+us.Color=_G.Primary
+us.Parent=img
+
+local uc=Instance.new("UICorner")
+uc.CornerRadius=UDim.new(0,5)
+uc.Parent=img
+
+img.MouseButton1Click:Connect(function()
+	local r=cg:FindFirstChild("RELZHUB")
+	if r then r.Enabled=not r.Enabled end
+end)
+
+repeat wait(1) until game:IsLoaded()
+
+local function drag(e,f)
+	local dr,sp,fp,li
+	e.InputBegan:Connect(function(i)
+		if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then
+			dr=true
+			sp=i.Position
+			fp=f.Position
+			i.Changed:Connect(function()
+				if i.UserInputState==Enum.UserInputState.End then dr=false end
+			end)
+		end
+	end)
+	e.InputChanged:Connect(function(i)
+		if i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch then li=i end
+	end)
+	uis.InputChanged:Connect(function(i)
+		if i==li and dr then
+			local d=i.Position-sp
+			ts:Create(f,TweenInfo.new(.15),{Position=UDim2.new(fp.X.Scale,fp.X.Offset+d.X,fp.Y.Scale,fp.Y.Offset+d.Y)}):Play()
+		end
+	end)
+end
+
+local w={}
+
+function w.Window(cfg,name)
+	local first=false
+	
+	local alert=Instance.new("ScreenGui")
+	alert.Name="AlertFrame"
+	alert.Parent=cg
+	alert.ZIndexBehavior=Enum.ZIndexBehavior.Global
+	
+	local gui=Instance.new("ScreenGui")
+	gui.Name="RELZHUB"
+	gui.Parent=cg
+	gui.ZIndexBehavior=Enum.ZIndexBehavior.Global
+	
+	local main=Instance.new("Frame")
+	main.Name="Main"
+	main.Parent=gui
+	main.ClipsDescendants=true
+	main.AnchorPoint=Vector2.new(.5,.5)
+	main.BackgroundColor3=_G.Dark
+	main.BackgroundTransparency=.1
+	main.Position=UDim2.new(.5,0,.5,0)
+	main.Size=UDim2.new(0,0,0,0)
+	main:TweenSize(UDim2.new(0,524,0,332),"Out","Quad",.4,true)
+	
+	Instance.new("UIStroke",main).Color=_G.Primary
+	Instance.new("UICorner",main).CornerRadius=UDim.new(0,5)
+	
+	local db=Instance.new("Frame")
+	db.Name="DragButton"
+	db.Parent=main
+	db.Position=UDim2.new(1,5,1,5)
+	db.AnchorPoint=Vector2.new(1,1)
+	db.Size=UDim2.new(0,15,0,15)
+	db.BackgroundColor3=_G.Primary
+	db.BackgroundTransparency=.1
+	db.ZIndex=10
+	Instance.new("UICorner",db).CornerRadius=UDim.new(0,99)
+	
+	local top=Instance.new("Frame")
+	top.Name="Top"
+	top.Parent=main
+	top.BackgroundTransparency=1
+	top.Size=UDim2.new(1,0,0,40)
+	
+	local title=Instance.new("TextLabel")
+	title.Parent=top
+	title.BackgroundTransparency=1
+	title.Position=UDim2.new(0,15,.5,0)
+	title.AnchorPoint=Vector2.new(0,.5)
+	title.Font=Enum.Font.GothamBold
+	title.Text="RELZ HUB |"
+	title.TextSize=15
+	title.TextColor3=Color3.new(1,1,1)
+	title.TextXAlignment=Enum.TextXAlignment.Left
+	title.Size=UDim2.new(0,txs:GetTextSize(title.Text,15,title.Font,Vector2.new(math.huge,math.huge)).X,0,25)
+	
+	local patch=Instance.new("TextLabel")
+	patch.Parent=title
+	patch.BackgroundTransparency=1
+	patch.Position=UDim2.new(1,5,.5,0)
+	patch.AnchorPoint=Vector2.new(0,.5)
+	patch.Font=Enum.Font.Gotham
+	patch.Text=name
+	patch.TextSize=15
+	patch.TextColor3=_G.Primary
+	patch.Size=UDim2.new(0,txs:GetTextSize(name,15,patch.Font,Vector2.new(math.huge,math.huge)).X,0,25)
+	
+	local hide=Instance.new("ImageButton")
+	hide.Parent=top
+	hide.BackgroundTransparency=1
+	hide.AnchorPoint=Vector2.new(1,.5)
+	hide.Position=UDim2.new(1,-10,.5,0)
+	hide.Size=UDim2.new(0,25,0,25)
+	hide.Image="rbxassetid://7743878857"
+	hide.ImageColor3=Color3.fromRGB(245,245,245)
+	Instance.new("UICorner",hide).CornerRadius=UDim.new(0,3)
+	hide.MouseButton1Click:Connect(function() gui.Enabled=not gui.Enabled end)
+	
+	local sep=Instance.new("Frame")
+	sep.Parent=top
+	sep.BackgroundColor3=_G.Primary
+	sep.BorderSizePixel=0
+	sep.AnchorPoint=Vector2.new(.5,1)
+	sep.Position=UDim2.new(.5,0,1,0)
+	sep.Size=UDim2.new(1,0,0,1)
+	
+	local tab=Instance.new("Frame")
+	tab.Name="Tab"
+	tab.Parent=main
+	tab.BackgroundTransparency=1
+	tab.Position=UDim2.new(0,8,0,45)
+	tab.Size=UDim2.new(0,148,0,275)
+	
+	local scroll=Instance.new("ScrollingFrame")
+	scroll.Name="ScrollTab"
+	scroll.Parent=tab
+	scroll.Active=true
+	scroll.BackgroundTransparency=1
+	scroll.Size=UDim2.new(1,0,1,0)
+	scroll.ScrollBarThickness=0
+	
+	local ll=Instance.new("UIListLayout")
+	ll.Parent=scroll
+	ll.SortOrder=Enum.SortOrder.LayoutOrder
+	ll.Padding=UDim.new(0,2)
+	Instance.new("UIPadding",scroll)
+	
+	local page=Instance.new("Frame")
+	page.Name="Page"
+	page.Parent=main
+	page.BackgroundTransparency=1
+	page.Position=UDim2.new(0,166,0,45)
+	page.Size=UDim2.new(0,350,0,275)
+	Instance.new("UICorner",page).CornerRadius=UDim.new(0,3)
+	
+	local mp=Instance.new("Frame")
+	mp.Name="MainPage"
+	mp.Parent=page
+	mp.ClipsDescendants=true
+	mp.BackgroundTransparency=1
+	mp.Size=UDim2.new(1,0,1,0)
+	
+	local pl=Instance.new("Folder")
+	pl.Name="PageList"
+	pl.Parent=mp
+	
+	local upl=Instance.new("UIPageLayout")
+	upl.Parent=pl
+	upl.SortOrder=Enum.SortOrder.LayoutOrder
+	upl.EasingDirection=Enum.EasingDirection.InOut
+	upl.EasingStyle=Enum.EasingStyle.Quad
+	upl.TweenTime=0
+	upl.GamepadInputEnabled=false
+	upl.ScrollWheelInputEnabled=false
+	upl.TouchInputEnabled=false
+	
+	drag(top,main)
+	
+	uis.InputBegan:Connect(function(i)
+		if i.KeyCode==Enum.KeyCode.Insert then gui.Enabled=not gui.Enabled end
+	end)
+	
+	local resizing=false
+	db.InputBegan:Connect(function(i)
+		if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then resizing=true end
+	end)
+	uis.InputEnded:Connect(function(i)
+		if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then resizing=false end
+	end)
+	uis.InputChanged:Connect(function(i)
+		if resizing and (i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch) then
+			main.Size=UDim2.new(0,math.clamp(i.Position.X-main.AbsolutePosition.X,524,math.huge),0,math.clamp(i.Position.Y-main.AbsolutePosition.Y,322,math.huge))
+			page.Size=UDim2.new(0,math.clamp(i.Position.X-page.AbsolutePosition.X-8,350,math.huge),0,math.clamp(i.Position.Y-page.AbsolutePosition.Y-8,270,math.huge))
+			tab.Size=UDim2.new(0,148,0,math.clamp(i.Position.Y-tab.AbsolutePosition.Y-8,270,math.huge))
+		end
+	end)
+	
+	function w.Alert(cfg,msg)
+		if alert:FindFirstChild("Frame") then alert.Frame:Destroy() end
+		local f=Instance.new("Frame")
+		f.Parent=alert
+		f.BackgroundColor3=_G.Dark
+		f.BackgroundTransparency=.1
+		f.Position=UDim2.new(1,0,0,0)
+		f.Size=UDim2.new(0,200,0,60)
+		Instance.new("UIStroke",f).Color=_G.Primary
+		Instance.new("UICorner",f).CornerRadius=UDim.new(0,5)
+		
+		local ic=Instance.new("ImageLabel")
+		ic.Parent=f
+		ic.BackgroundTransparency=1
+		ic.Position=UDim2.new(0,8,0,8)
+		ic.Size=UDim2.new(0,45,0,45)
+		ic.Image="rbxassetid://13940080072"
+		
+		local t1=Instance.new("TextLabel")
+		t1.Parent=f
+		t1.BackgroundTransparency=1
+		t1.Position=UDim2.new(0,55,0,14)
+		t1.Font=Enum.Font.GothamBold
+		t1.Text="Relz Hub"
+		t1.TextColor3=Color3.new(1,1,1)
+		t1.TextSize=16
+		t1.TextXAlignment=Enum.TextXAlignment.Left
+		
+		local t2=Instance.new("TextLabel")
+		t2.Parent=f
+		t2.BackgroundTransparency=1
+		t2.Position=UDim2.new(0,55,0,33)
+		t2.Font=Enum.Font.GothamSemibold
+		t2.TextTransparency=.3
+		t2.Text=msg
+		t2.TextColor3=Color3.fromRGB(200,200,200)
+		t2.TextSize=12
+		t2.TextXAlignment=Enum.TextXAlignment.Left
+		
+		f:TweenPosition(UDim2.new(1,-195,0,0),"Out","Quad",.4,true)
+		wait(2)
+		f:TweenPosition(UDim2.new(1,0,0,0),"Out","Quad",.5,true)
+		wait(.6)
+		f:Destroy()
+	end
+	
+	return {Tab=function(cfg,tname,icon)
+		local tbtn=Instance.new("TextButton")
+		tbtn.Parent=scroll
+		tbtn.Name=tname.."Server"
+		tbtn.Text=""
+		tbtn.BackgroundColor3=_G.Primary
+		tbtn.BackgroundTransparency=1
+		tbtn.Size=UDim2.new(1,0,0,35)
+		Instance.new("UICorner",tbtn).CornerRadius=UDim.new(0,5)
+		
+		local sel=Instance.new("Frame")
+		sel.Name="SelectedTab"
+		sel.Parent=tbtn
+		sel.BackgroundColor3=_G.Primary
+		sel.Size=UDim2.new(0,3,0,0)
+		sel.Position=UDim2.new(0,0,.5,0)
+		sel.AnchorPoint=Vector2.new(0,.5)
+		sel.ZIndex=4
+		Instance.new("UICorner",sel).CornerRadius=UDim.new(0,100)
+		
+		local ttl=Instance.new("TextLabel")
+		ttl.Name="Title"
+		ttl.Parent=tbtn
+		ttl.BackgroundTransparency=1
+		ttl.Position=UDim2.new(0,30,.5,0)
+		ttl.AnchorPoint=Vector2.new(0,.5)
+		ttl.Font=Enum.Font.GothamSemibold
+		ttl.Text=tname
+		ttl.TextColor3=Color3.new(1,1,1)
+		ttl.TextTransparency=.4
+		ttl.TextSize=13
+		ttl.TextXAlignment=Enum.TextXAlignment.Left
+		
+		local ico=Instance.new("ImageLabel")
+		ico.Name="IDK"
+		ico.Parent=tbtn
+		ico.BackgroundTransparency=1
+		ico.ImageTransparency=.3
+		ico.Position=UDim2.new(0,7,.5,0)
+		ico.Size=UDim2.new(0,15,0,15)
+		ico.AnchorPoint=Vector2.new(0,.5)
+		ico.Image=icon
+		
+		local pg=Instance.new("ScrollingFrame")
+		pg.Name=tname.."_Page"
+		pg.Parent=pl
+		pg.Active=true
+		pg.BackgroundTransparency=1
+		pg.Size=UDim2.new(1,0,1,0)
+		pg.ScrollBarThickness=0
+		
+		Instance.new("UIPadding",pg)
+		local pll=Instance.new("UIListLayout")
+		pll.Padding=UDim.new(0,3)
+		pll.Parent=pg
+		pll.SortOrder=Enum.SortOrder.LayoutOrder
+		
+		tbtn.MouseButton1Click:Connect(function()
+			for _,v in scroll:GetChildren() do
+				if v:IsA("TextButton") then
+					ts:Create(v,TweenInfo.new(.3),{BackgroundTransparency=1}):Play()
+					ts:Create(v.SelectedTab,TweenInfo.new(0),{Size=UDim2.new(0,3,0,0)}):Play()
+					ts:Create(v.IDK,TweenInfo.new(.3),{ImageTransparency=.4}):Play()
+					ts:Create(v.Title,TweenInfo.new(.3),{TextTransparency=.4}):Play()
+				end
+			end
+			ts:Create(tbtn,TweenInfo.new(.3),{BackgroundTransparency=.8}):Play()
+			ts:Create(sel,TweenInfo.new(.3),{Size=UDim2.new(0,3,0,15)}):Play()
+			ts:Create(ico,TweenInfo.new(.3),{ImageTransparency=0}):Play()
+			ts:Create(ttl,TweenInfo.new(.3),{TextTransparency=0}):Play()
+			for _,v in pl:GetChildren() do
+				if v.Name==tname.."_Page" then upl:JumpTo(v) end
+			end
+		end)
+		
+		if not first then
+			first=true
+			ts:Create(tbtn,TweenInfo.new(.3),{BackgroundTransparency=.8}):Play()
+			ts:Create(sel,TweenInfo.new(.2),{Size=UDim2.new(0,3,0,15)}):Play()
+			ts:Create(ico,TweenInfo.new(.3),{ImageTransparency=0}):Play()
+			ts:Create(ttl,TweenInfo.new(.3),{TextTransparency=0}):Play()
+			upl:JumpToIndex(1)
+		end
+		
+		rs.Stepped:Connect(function()
+			pcall(function()
+				pg.CanvasSize=UDim2.new(0,0,0,pll.AbsoluteContentSize.Y)
+				scroll.CanvasSize=UDim2.new(0,0,0,ll.AbsoluteContentSize.Y)
+			end)
+		end)
+		
+		return {
+			Button=function(cfg,txt,cb)
+				local f=Instance.new("Frame")
+				f.Parent=pg
+				f.BackgroundColor3=_G.Primary
+				f.BackgroundTransparency=.8
+				f.Size=UDim2.new(1,0,0,36)
+				Instance.new("UICorner",f).CornerRadius=UDim.new(0,5)
+				
+				local l=Instance.new("TextLabel")
+				l.Parent=f
+				l.BackgroundTransparency=1
+				l.AnchorPoint=Vector2.new(0,.5)
+				l.Position=UDim2.new(0,15,.5,0)
+				l.Size=UDim2.new(1,0,1,0)
+				l.Font=Enum.Font.GothamSemibold
+				l.Text=txt
+				l.TextXAlignment=Enum.TextXAlignment.Left
+				l.TextColor3=Color3.new(1,1,1)
+				l.TextSize=13
+				
+				local b=Instance.new("TextButton")
+				b.Parent=f
+				b.BackgroundColor3=_G.Primary
+				b.AnchorPoint=Vector2.new(1,.5)
+				b.Position=UDim2.new(1,-10,.5,0)
+				b.Size=UDim2.new(0,22,0,22)
+				b.Text=""
+				Instance.new("UICorner",b).CornerRadius=UDim.new(0,4)
+				
+				local im=Instance.new("ImageLabel")
+				im.Parent=b
+				im.BackgroundTransparency=1
+				im.AnchorPoint=Vector2.new(.5,.5)
+				im.Position=UDim2.new(.5,0,.5,0)
+				im.Size=UDim2.new(0,15,0,15)
+				im.Image="rbxassetid://10723375250"
+				im.ImageTransparency=.2
+				im.ImageColor3=Color3.fromRGB(245,245,245)
+				
+				b.MouseButton1Click:Connect(cb)
+			end,
+			Toggle=function(cfg,txt,def,desc,cb)
+				local state=def or false
+				local f=Instance.new("TextButton")
+				f.Parent=pg
+				f.BackgroundColor3=_G.Primary
+				f.BackgroundTransparency=.8
+				f.Size=UDim2.new(1,0,0,46)
+				f.AutoButtonColor=false
+				f.Text=""
+				Instance.new("UICorner",f).CornerRadius=UDim.new(0,5)
+				
+				local l=Instance.new("TextLabel")
+				l.Parent=f
+				l.BackgroundTransparency=1
+				l.Font=Enum.Font.GothamSemibold
+				l.Text=txt
+				l.TextColor3=Color3.new(1,1,1)
+				l.TextSize=13
+				l.TextXAlignment=Enum.TextXAlignment.Left
+				l.AnchorPoint=Vector2.new(0,.5)
+				l.Position=desc and UDim2.new(0,15,.5,-5) or UDim2.new(0,15,.5,0)
+				
+				if desc then
+					local d=Instance.new("TextLabel")
+					d.Parent=l
+					d.BackgroundTransparency=1
+					d.Position=UDim2.new(0,0,0,22)
+					d.Font=Enum.Font.Gotham
+					d.Text=desc
+					d.TextColor3=Color3.fromRGB(200,200,200)
+					d.TextSize=10
+					d.TextXAlignment=Enum.TextXAlignment.Left
+				end
+				
+				local tf=Instance.new("Frame")
+				tf.Parent=f
+				tf.BackgroundTransparency=1
+				tf.Position=UDim2.new(1,-10,.5,0)
+				tf.Size=UDim2.new(0,35,0,20)
+				tf.AnchorPoint=Vector2.new(1,.5)
+				
+				local tb=Instance.new("TextButton")
+				tb.Parent=tf
+				tb.BackgroundColor3=_G.Dark
+				tb.Size=UDim2.new(1,0,1,0)
+				tb.Text=""
+				tb.AutoButtonColor=false
+				Instance.new("UICorner",tb).CornerRadius=UDim.new(0,10)
+				
+				local st=Instance.new("UIStroke")
+				st.Color=_G.Primary
+				st.Parent=tf
+				
+				local c=Instance.new("Frame")
+				c.Parent=tb
+				c.BackgroundColor3=_G.Primary
+				c.Position=UDim2.new(0,3,.5,0)
+				c.Size=UDim2.new(0,14,0,14)
+				c.AnchorPoint=Vector2.new(0,.5)
+				Instance.new("UICorner",c).CornerRadius=UDim.new(0,10)
+				
+				local function upd()
+					if state then
+						st.Thickness=0
+						c:TweenPosition(UDim2.new(0,18,.5,0),"Out","Sine",.2,true)
+						ts:Create(c,TweenInfo.new(.4),{BackgroundColor3=_G.Dark}):Play()
+						ts:Create(tb,TweenInfo.new(.4),{BackgroundColor3=_G.Primary}):Play()
+					else
+						st.Thickness=1
+						c:TweenPosition(UDim2.new(0,3,.5,0),"Out","Sine",.2,true)
+						ts:Create(c,TweenInfo.new(.4),{BackgroundColor3=_G.Primary}):Play()
+						ts:Create(tb,TweenInfo.new(.4),{BackgroundColor3=_G.Dark}):Play()
+					end
+					pcall(cb,state)
+				end
+				
+				tb.MouseButton1Click:Connect(function()
+					state=not state
+					upd()
+				end)
+				
+				if def then upd() end
+			end,
+			Dropdown=function(cfg,txt,items,def,cb)
+				local open=false
+				local f=Instance.new("Frame")
+				f.Parent=pg
+				f.BackgroundColor3=_G.Primary
+				f.BackgroundTransparency=.8
+				f.Size=UDim2.new(1,0,0,40)
+				Instance.new("UICorner",f).CornerRadius=UDim.new(0,5)
+				
+				local l=Instance.new("TextLabel")
+				l.Parent=f
+				l.BackgroundTransparency=1
+				l.Position=UDim2.new(0,15,0,5)
+				l.Font=Enum.Font.GothamSemibold
+				l.Text=txt
+				l.TextColor3=Color3.new(1,1,1)
+				l.TextSize=13
+				l.TextXAlignment=Enum.TextXAlignment.Left
+				
+				local sb=Instance.new("TextButton")
+				sb.Parent=f
+				sb.BackgroundColor3=_G.Dark
+				sb.BackgroundTransparency=.1
+				sb.Position=UDim2.new(1,-5,0,5)
+				sb.Size=UDim2.new(0,100,0,30)
+				sb.AnchorPoint=Vector2.new(1,0)
+				sb.Font=Enum.Font.GothamMedium
+				sb.TextSize=9
+				sb.Text="   "..(def or "Select Items")
+				sb.TextColor3=Color3.new(1,1,1)
+				sb.TextXAlignment=Enum.TextXAlignment.Left
+				sb.ClipsDescendants=true
+				Instance.new("UICorner",sb).CornerRadius=UDim.new(0,5)
+				
+				local df=Instance.new("Frame")
+				df.Parent=f
+				df.BackgroundColor3=_G.Dark
+				df.ClipsDescendants=true
+				df.Size=UDim2.new(1,-10,0,100)
+				df.Position=UDim2.new(0,5,0,40)
+				df.Visible=false
+				Instance.new("UICorner",df).CornerRadius=UDim.new(0,5)
+				
+				local ds=Instance.new("ScrollingFrame")
+				ds.Parent=df
+				ds.Active=true
+				ds.BackgroundTransparency=1
+				ds.Position=UDim2.new(0,0,0,10)
+				ds.Size=UDim2.new(1,0,0,80)
+				ds.ScrollBarThickness=3
+				ds.ZIndex=3
+				Instance.new("UIPadding",ds).PaddingLeft=UDim.new(0,15)
+				local dll=Instance.new("UIListLayout")
+				dll.Parent=ds
+				dll.Padding=UDim.new(0,1)
+				
+				local function addItem(name)
+					local ib=Instance.new("TextButton")
+					ib.Parent=ds
+					ib.BackgroundColor3=_G.Primary
+					ib.BackgroundTransparency=1
+					ib.Size=UDim2.new(1,0,0,30)
+					ib.Font=Enum.Font.GothamSemibold
+					ib.Text=tostring(name)
+					ib.TextColor3=Color3.new(1,1,1)
+					ib.TextSize=11
+					ib.TextTransparency=.5
+					ib.TextXAlignment=Enum.TextXAlignment.Left
+					ib.ZIndex=4
+					Instance.new("UIPadding",ib).PaddingLeft=UDim.new(0,8)
+					Instance.new("UICorner",ib).CornerRadius=UDim.new(0,5)
+					
+					local si=Instance.new("Frame")
+					si.Parent=ib
+					si.BackgroundColor3=_G.Primary
+					si.BackgroundTransparency=1
+					si.Size=UDim2.new(0,3,.4,0)
+					si.Position=UDim2.new(0,-8,.5,0)
+					si.AnchorPoint=Vector2.new(0,.5)
+					si.ZIndex=4
+					Instance.new("UICorner",si).CornerRadius=UDim.new(0,999)
+					
+					ib.MouseEnter:Connect(function()
+						ts:Create(ib,TweenInfo.new(.3),{TextTransparency=0,BackgroundTransparency=.8}):Play()
+						ts:Create(si,TweenInfo.new(.3),{BackgroundTransparency=0}):Play()
+					end)
+					ib.MouseLeave:Connect(function()
+						ts:Create(ib,TweenInfo.new(.3),{TextTransparency=.5,BackgroundTransparency=1}):Play()
+						ts:Create(si,TweenInfo.new(.3),{BackgroundTransparency=1}):Play()
+					end)
+					ib.MouseButton1Click:Connect(function()
+						open=false
+						sb.Text="   "..ib.Text
+						cb(ib.Text)
+						ts:Create(df,TweenInfo.new(.3),{Size=UDim2.new(1,-10,0,0)}):Play()
+						ts:Create(f,TweenInfo.new(.3),{Size=UDim2.new(1,0,0,40)}):Play()
+						df.Visible=false
+					end)
+				end
+				
+				for _,v in items do addItem(v) end
+				ds.CanvasSize=UDim2.new(0,0,0,dll.AbsoluteContentSize.Y)
+				
+				sb.MouseButton1Click:Connect(function()
+					open=not open
+					if open then
+						df.Visible=true
+						ts:Create(df,TweenInfo.new(.3),{Size=UDim2.new(1,-10,0,100)}):Play()
+						ts:Create(f,TweenInfo.new(.3),{Size=UDim2.new(1,0,0,145)}):Play()
+					else
+						ts:Create(df,TweenInfo.new(.3),{Size=UDim2.new(1,-10,0,0)}):Play()
+						ts:Create(f,TweenInfo.new(.3),{Size=UDim2.new(1,0,0,40)}):Play()
+					end
+				end)
+				
+				return {
+					Add=function(cfg,name) addItem(name) end,
+					Clear=function()
+						sb.Text="   Select Items"
+						open=false
+						df.Visible=false
+						for _,v in ds:GetChildren() do if v:IsA("TextButton") then v:Destroy() end end
+					end
+				}
+			end,
+			Slider=function(cfg,txt,min,max,def,cb)
+				local f=Instance.new("Frame")
+				f.Parent=pg
+				f.BackgroundTransparency=1
+				f.Size=UDim2.new(1,0,0,45)
+				
+				local sf=Instance.new("Frame")
+				sf.Parent=f
+				sf.BackgroundColor3=_G.Primary
+				sf.BackgroundTransparency=.8
+				sf.Size=UDim2.new(1,0,0,45)
+				Instance.new("UICorner",sf).CornerRadius=UDim.new(0,5)
+				
+				local l=Instance.new("TextLabel")
+				l.Parent=sf
+				l.BackgroundTransparency=1
+				l.Position=UDim2.new(0,15,.5,0)
+				l.AnchorPoint=Vector2.new(0,.5)
+				l.Font=Enum.Font.GothamSemibold
+				l.Text=txt
+				l.TextColor3=Color3.new(1,1,1)
+				l.TextSize=13
+				l.TextXAlignment=Enum.TextXAlignment.Left
+				
+				local bar=Instance.new("Frame")
+				bar.Parent=sf
+				bar.BackgroundColor3=_G.Primary
+				bar.BackgroundTransparency=.8
+				bar.Size=UDim2.new(0,100,0,4)
+				bar.Position=UDim2.new(1,-10,.5,10)
+				bar.AnchorPoint=Vector2.new(1,.5)
+				Instance.new("UICorner",bar).CornerRadius=UDim.new(0,5)
+				
+				local fill=Instance.new("Frame")
+				fill.Parent=bar
+				fill.BackgroundColor3=_G.Dark
+				fill.Size=UDim2.new(def/max,0,0,4)
+				Instance.new("UICorner",fill).CornerRadius=UDim.new(0,5)
+				
+				local circle=Instance.new("Frame")
+				circle.Parent=fill
+				circle.BackgroundColor3=_G.Dark
+				circle.Position=UDim2.new(1,0,0,-5)
+				circle.AnchorPoint=Vector2.new(.5,0)
+				circle.Size=UDim2.new(0,13,0,13)
+				Instance.new("UICorner",circle).CornerRadius=UDim.new(0,100)
+				
+				local tb=Instance.new("TextBox")
+				tb.Parent=sf
+				tb.BackgroundColor3=_G.Dark
+				tb.BackgroundTransparency=.1
+				tb.Font=Enum.Font.Code
+				tb.Size=UDim2.new(0,35,0,15)
+				tb.AnchorPoint=Vector2.new(1,.5)
+				tb.Position=UDim2.new(1,-10,.5,-10)
+				tb.TextColor3=Color3.new(1,1,1)
+				tb.TextSize=9
+				tb.Text=tostring(def)
+				tb.ClearTextOnFocus=false
+				tb.TextXAlignment=Enum.TextXAlignment.Center
+				Instance.new("UICorner",tb).CornerRadius=UDim.new(0,3)
+				
+				local drag=false
+				circle.InputBegan:Connect(function(i)
+					if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag=true end
+				end)
+				bar.InputBegan:Connect(function(i)
+					if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag=true end
+				end)
+				uis.InputEnded:Connect(function(i)
+					if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then drag=false end
+				end)
+				uis.InputChanged:Connect(function(i)
+					if drag and (i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch) then
+						local val=math.floor(((max-min)/100)*fill.AbsoluteSize.X+min)
+						pcall(cb,val)
+						tb.Text=tostring(val)
+						fill.Size=UDim2.new(0,math.clamp(i.Position.X-fill.AbsolutePosition.X,0,100),0,4)
+						circle.Position=UDim2.new(0,math.clamp(i.Position.X-fill.AbsolutePosition.X-5,0,100),0,-5)
+					end
+				end)
+				tb.FocusLost:Connect(function()
+					local v=tonumber(tb.Text) or min
+					if v>max then v=max end
+					if v<min then v=min end
+					tb.Text=tostring(v)
+					fill.Size=UDim2.new(v/max,0,0,4)
+					circle.Position=UDim2.new(1,0,0,-5)
+					pcall(cb,v)
+				end)
+			end,
+			Textbox=function(cfg,txt,cb)
+				local f=Instance.new("Frame")
+				f.Parent=pg
+				f.BackgroundColor3=_G.Primary
+				f.BackgroundTransparency=.8
+				f.Size=UDim2.new(1,0,0,35)
+				Instance.new("UICorner",f).CornerRadius=UDim.new(0,5)
+				
+				local l=Instance.new("TextLabel")
+				l.Parent=f
+				l.BackgroundTransparency=1
+				l.Position=UDim2.new(0,15,.5,0)
+				l.AnchorPoint=Vector2.new(0,.5)
+				l.Font=Enum.Font.GothamSemibold
+				l.Text=txt
+				l.TextColor3=Color3.new(1,1,1)
+				l.TextSize=13
+				l.TextXAlignment=Enum.TextXAlignment.Left
+				
+				local tb=Instance.new("TextBox")
+				tb.Parent=f
+				tb.BackgroundColor3=_G.Dark
+				tb.BackgroundTransparency=.1
+				tb.Position=UDim2.new(1,-5,.5,0)
+				tb.AnchorPoint=Vector2.new(1,.5)
+				tb.Size=UDim2.new(0,80,0,25)
+				tb.Font=Enum.Font.GothamSemibold
+				tb.Text=""
+				tb.TextColor3=Color3.fromRGB(225,225,225)
+				tb.TextSize=11
+				tb.ClipsDescendants=true
+				Instance.new("UICorner",tb).CornerRadius=UDim.new(0,5)
+				tb.FocusLost:Connect(function() cb(tb.Text) end)
+			end,
+			Label=function(cfg,txt)
+				local l=Instance.new("TextLabel")
+				l.Parent=pg
+				l.BackgroundTransparency=1
+				l.Size=UDim2.new(1,0,0,20)
+				l.Font=Enum.Font.GothamSemibold
+				l.TextColor3=Color3.fromRGB(225,225,225)
+				l.TextSize=13
+				l.Text=txt
+				l.TextXAlignment=Enum.TextXAlignment.Left
+				Instance.new("UIPadding",l).PaddingLeft=UDim.new(0,2)
+				return {Set=function(cfg,t) l.Text=t end}
+			end,
+			Seperator=function(cfg,txt)
+				local f=Instance.new("Frame")
+				f.Parent=pg
+				f.BackgroundTransparency=1
+				f.Size=UDim2.new(1,0,0,36)
+				
+				local l=Instance.new("TextLabel")
+				l.Parent=f
+				l.BackgroundTransparency=1
+				l.AnchorPoint=Vector2.new(.5,1)
+				l.Position=UDim2.new(.5,0,0,30)
+				l.Size=UDim2.new(1,0,0,36)
+				l.Font=Enum.Font.GothamBold
+				l.Text=txt
+				l.TextColor3=Color3.new(1,1,1)
+				l.TextSize=14
+				
+				local line=Instance.new("Frame")
+				line.Parent=f
+				line.BackgroundColor3=_G.Primary
+				line.BorderSizePixel=0
+				line.AnchorPoint=Vector2.new(.5,.5)
+				line.Position=UDim2.new(.5,0,0,25)
+				line.Size=UDim2.new(0,txs:GetTextSize(txt,14,l.Font,Vector2.new(math.huge,math.huge)).X*.7,0,3)
+				Instance.new("UICorner",line).CornerRadius=UDim.new(0,math.huge)
+			end,
+			Line=function()
+				local f=Instance.new("Frame")
+				f.Parent=pg
+				f.BackgroundTransparency=1
+				f.Size=UDim2.new(1,0,0,20)
+				
+				local line=Instance.new("Frame")
+				line.Parent=f
+				line.BorderSizePixel=0
+				line.Position=UDim2.new(0,0,0,10)
+				line.Size=UDim2.new(1,0,0,1)
+				
+				local g=Instance.new("UIGradient")
+				g.Color=ColorSequence.new({
+					ColorSequenceKeypoint.new(0,_G.Dark),
+					ColorSequenceKeypoint.new(.4,_G.Primary),
+					ColorSequenceKeypoint.new(.6,_G.Primary),
+					ColorSequenceKeypoint.new(1,_G.Dark)
+				})
+				g.Parent=line
+			end
+		}
+	end}
+end
+
+return w
